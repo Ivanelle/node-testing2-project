@@ -6,15 +6,30 @@ function find() {
         .select('jokes_id', 'joke', 'punchline', 'rating')
     }
 
-function findById(joke_id) {
-    return db('jokes')
-      .where('jokes_id', joke_id)
+async function findById(jokes_id) {
+    return await db('jokes')
+    .select(
+      'jokes_id',
+      'joke',
+      'punchline',
+      'rating'
+    )
+      .where('jokes_id', jokes_id)
       .first()
   }
-  
+  // const rows = await db('users as u')
+    // .leftJoin('posts as p', 'u.id', 'p.user_id')
+    // .select(
+    //   'u.id as user_id', 
+    //   'username', 
+    //   'contents', 
+    //   'p.id as post_id'
+    //   )
+    // .where('u.id', id)
+
   async function add(joke) {
-    const [id] = await db('jokes').insert(joke)
-    return findById(id)
+    const [jokes_id] = await db('jokes').insert(joke)
+    return findById(jokes_id)
   }
 
 module.exports = {
