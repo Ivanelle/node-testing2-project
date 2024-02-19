@@ -20,7 +20,12 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', validateJoke, ratingRange, (req, res, next) => {
-
+    const { jokes_id, joke, punchline, rating } = req.body
+    Joke.add({ jokes_id, joke, punchline, rating })
+        .then(newJoke => {
+            res.status(201).json(newJoke)
+        })
+        .catch(next)
 })
 
 module.exports = router
